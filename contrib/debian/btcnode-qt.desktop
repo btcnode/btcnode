@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Btcnode Core
+Comment=Btcnode P2P Cryptocurrency
+Comment[fr]=Btcnode, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Btcnode, eşten eşe kriptografik sanal para birimi
+Exec=btcnode-qt %u
+Terminal=false
+Type=Application
+Icon=btcnode128
+MimeType=x-scheme-handler/btcnode;
+Categories=Office;Finance;
+StartupWMClass=Btcnode-qt

@@ -1,0 +1,157 @@
+
+## <summary>policy for btcnode</summary>
+
+
+########################################
+## <summary>
+##	Transition to btcnode.
+## </summary>
+## <param name="domain">
+## <summary>
+##	Domain allowed to transition.
+## </summary>
+## </param>
+#
+interface(`btcnode_domtrans',`
+	gen_require(`
+		type btcnode_t, btcnode_exec_t;
+	')
+
+	corecmd_search_bin($1)
+	domtrans_pattern($1, btcnode_exec_t, btcnode_t)
+')
+
+
+########################################
+## <summary>
+##	Execute btcnode server in the btcnode domain.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`btcnode_initrc_domtrans',`
+	gen_require(`
+		type btcnode_initrc_exec_t;
+	')
+
+	init_labeled_script_domtrans($1, btcnode_initrc_exec_t)
+')
+
+
+########################################
+## <summary>
+##	Search btcnode lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`btcnode_search_lib',`
+	gen_require(`
+		type btcnode_var_lib_t;
+	')
+
+	allow $1 btcnode_var_lib_t:dir search_dir_perms;
+	files_search_var_lib($1)
+')
+
+########################################
+## <summary>
+##	Read btcnode lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`btcnode_read_lib_files',`
+	gen_require(`
+		type btcnode_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	read_files_pattern($1, btcnode_var_lib_t, btcnode_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage btcnode lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`btcnode_manage_lib_files',`
+	gen_require(`
+		type btcnode_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_files_pattern($1, btcnode_var_lib_t, btcnode_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage btcnode lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`btcnode_manage_lib_dirs',`
+	gen_require(`
+		type btcnode_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_dirs_pattern($1, btcnode_var_lib_t, btcnode_var_lib_t)
+')
+
+
+########################################
+## <summary>
+##	All of the rules required to administrate
+##	a btcnode environment
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+## <param name="role">
+##	<summary>
+##	Role allowed access.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`btcnode_admin',`
+	gen_require(`
+		type btcnode_t;
+		type btcnode_initrc_exec_t;
+		type btcnode_var_lib_t;
+	')
+
+	allow $1 btcnode_t:process { ptrace signal_perms };
+	ps_process_pattern($1, btcnode_t)
+
+	btcnode_initrc_domtrans($1)
+	domain_system_change_exemption($1)
+	role_transition $2 btcnode_initrc_exec_t system_r;
+	allow $2 system_r;
+
+	files_search_var_lib($1)
+	admin_pattern($1, btcnode_var_lib_t)
+
+')
+

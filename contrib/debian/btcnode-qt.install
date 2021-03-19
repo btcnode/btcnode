@@ -1,0 +1,6 @@
+usr/local/bin/btcnode-qt usr/bin
+share/pixmaps/btcnode32.xpm usr/share/pixmaps
+share/pixmaps/btcnode16.xpm usr/share/pixmaps
+share/pixmaps/btcnode128.png usr/share/pixmaps
+debian/btcnode-qt.desktop usr/share/applications
+debian/btcnode-qt.protocol usr/share/kde4/services/

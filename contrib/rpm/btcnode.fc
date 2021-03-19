@@ -1,0 +1,8 @@
+/usr/bin/btcnode-cli		--	gen_context(system_u:object_r:btcnode_exec_t,s0)
+/usr/sbin/btcnoded		--	gen_context(system_u:object_r:btcnode_exec_t,s0)
+/usr/lib(64)?/btcnode/btcnoded		--	gen_context(system_u:object_r:btcnode_exec_t,s0)
+
+/etc/btcnode(/.*)?		gen_context(system_u:object_r:btcnode_conf_t,s0)
+/var/lib/btcnode(/.*)?		gen_context(system_u:object_r:btcnode_var_lib_t,s0)
+
+(/var)?/run/btcnoded(/.*)?   gen_context(system_u:object_r:btcnode_var_run_t,s0)

@@ -1,0 +1,3 @@
+usr/local/bin/btcnoded usr/bin
+usr/local/bin/btcnode-cli usr/bin
+debian/examples/btcnode.conf etc/btcnode
